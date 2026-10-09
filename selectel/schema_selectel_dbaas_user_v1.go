@@ -1,6 +1,8 @@
 package selectel
 
-import "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+import (
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
 
 func resourceDBaaSUserV1Schema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
@@ -32,6 +34,13 @@ func resourceDBaaSUserV1Schema() map[string]*schema.Schema {
 			Type:     schema.TypeString,
 			Required: true,
 			ForceNew: true,
+		},
+		"settings": {
+			Type:     schema.TypeMap,
+			Optional: true,
+			Elem: &schema.Schema{
+				Type: schema.TypeString,
+			},
 		},
 	}
 }
