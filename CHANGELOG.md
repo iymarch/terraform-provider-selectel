@@ -1,3 +1,70 @@
+## 9.3.0 (October 14, 2026)
+
+FEATURES:
+
+* Add `roles` argument to `selectel_dbaas_user_v1` resource ([#437](https://github.com/selectel/terraform-provider-selectel/pull/437))
+* Add `settings` argument to `selectel_dbaas_user_v1` resource ([#437](https://github.com/selectel/terraform-provider-selectel/pull/437))
+* Add new data sources ([#437](https://github.com/selectel/terraform-provider-selectel/pull/437)):
+  * `selectel_dbaas_roles_v1`
+  * `selectel_dbaas_user_setting_parameter_v1`
+
+BUG FIXES:
+
+* `selectel_dbaas_postgresql_datastore_v1`, `selectel_dbaas_mysql_datastore_v1`, `selectel_dbaas_redis_datastore_v1`, `selectel_dbaas_kafka_datastore_v1`: set `security_groups` as `Computed` to prevent permanent drift. API requires at least one security group per cluster and creates a default group automatically when none are specified. ([#437](https://github.com/selectel/terraform-provider-selectel/pull/437))
+
+## 9.2.0 (October 14, 2026)
+
+FEATURES:
+
+* Add new resource `selectel_compute_volume_v3` implemented with Terraform Plugin Framework ([#438](https://github.com/selectel/terraform-provider-selectel/pull/438)).
+* Add new data sources implemented with Terraform Plugin Framework ([#438](https://github.com/selectel/terraform-provider-selectel/pull/438)):
+  * `selectel_compute_volume_v3`
+  * `selectel_compute_volume_type_v3`
+  * `selectel_compute_snapshot_v3`
+
+IMPROVEMENTS:
+
+* Mark the provider `password` argument as sensitive ([#438](https://github.com/selectel/terraform-provider-selectel/pull/438)).
+
+## 9.1.0 (October 13, 2026)
+
+FEATURES:
+
+* Add new resources ([#439](https://github.com/selectel/terraform-provider-selectel/pull/439)):
+  * `selectel_vpc_public_subnet_v2`
+  * `selectel_vpc_network_v2`
+  * `selectel_vpc_network_subnet_v2`
+  * `selectel_vpc_network_subnet_route_v2`
+  * `selectel_vpc_port_v2`
+  * `selectel_vpc_port_forwarding_v2`
+  * `selectel_vpc_port_secgroup_associate_v2`
+  * `selectel_vpc_floatingip_associate_v2`
+  * `selectel_vpc_router_v2`
+  * `selectel_vpc_router_interface_v2`
+  * `selectel_vpc_router_route_v2`
+  * `selectel_vpc_router_routes_v2`
+  * `selectel_vpc_rbac_policy_v2`
+  * `selectel_vpc_secgroup_v2`
+  * `selectel_vpc_secgroup_rule_v2`
+* Add new data sources ([#439](https://github.com/selectel/terraform-provider-selectel/pull/439)):
+  * `selectel_vpc_network_v2`
+  * `selectel_vpc_network_subnet_v2`
+  * `selectel_vpc_port_v2`
+  * `selectel_vpc_router_v2`
+  * `selectel_vpc_secgroup_v2`
+
+  These resources and data sources replace the corresponding resources and data sources of the OpenStack provider. For the exact mapping and migration steps, see the [upgrade guide](https://registry.terraform.io/providers/selectel/selectel/latest/docs/guides/upgrading_to_version_9_1).
+
+DEPRECATIONS:
+
+* `selectel_vpc_subnet_v2` (resource): deprecated and will be removed in a future major release. Use `selectel_vpc_public_subnet_v2` instead ([#439](https://github.com/selectel/terraform-provider-selectel/pull/439)).
+
+## 9.0.0 (October 12, 2026)
+
+BREAKING CHANGES:
+
+* Switched the provider to plugin protocol 6. Terraform 1.1.5 or later is now required. Resources and data sources are unchanged. ([#436](https://github.com/selectel/terraform-provider-selectel/pull/436))
+
 ## 8.6.0 (October 2, 2026)
 
 FEATURES:

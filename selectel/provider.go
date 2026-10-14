@@ -47,6 +47,8 @@ const (
 	objectFlavors                      = "flavors"
 	objectConfigurationParameters      = "configuration-parameters"
 	objectShardGroup                   = "shard-group"
+	objectUserSettingParameters        = "user-setting-parameters"
+	objectRoles                        = "roles"
 	objectPrometheusMetricToken        = "prometheus-metric-token"
 	objectFeatureGates                 = "feature-gates"
 	objectAdmissionControllers         = "admission-controllers"
@@ -128,6 +130,7 @@ func Provider(providerVersion string) *schema.Provider {
 			"password": {
 				Type:        schema.TypeString,
 				Required:    true,
+				Sensitive:   true,
 				DefaultFunc: schema.EnvDefaultFunc("OS_PASSWORD", nil),
 				Description: "Service user password",
 			},
@@ -142,6 +145,8 @@ func Provider(providerVersion string) *schema.Provider {
 			"selectel_dbaas_flavor_v1":                             dataSourceDBaaSFlavorV1(),
 			"selectel_dbaas_flavor_v2":                             dataSourceDBaaSV2Flavor(),
 			"selectel_dbaas_configuration_parameter_v1":            dataSourceDBaaSConfigurationParameterV1(),
+			"selectel_dbaas_roles_v1":                              dataSourceDBaaSRolesV1(),
+			"selectel_dbaas_user_setting_parameter_v1":             dataSourceDBaaSUserSettingParameterV1(),
 			"selectel_dbaas_clickhouse_configuration_parameter_v2": dataSourceDBaaSV2ClickhouseConfigurationParameter(),
 			"selectel_dbaas_prometheus_metric_token_v1":            dataSourceDBaaSPrometheusMetricTokenV1(),
 			"selectel_mks_kubeconfig_v1":                           dataSourceMKSKubeconfigV1(),
@@ -160,6 +165,11 @@ func Provider(providerVersion string) *schema.Provider {
 			"selectel_global_router_zone_v1":                       dataSourceGlobalRouterZoneV1(),
 			"selectel_global_router_quota_v1":                      dataSourceGlobalRouterQuotaV1(),
 			"selectel_global_router_zone_group_v1":                 dataSourceGlobalRouterZoneGroupV1(),
+			"selectel_vpc_network_v2":                              dataSourceVPCNetworkV2(),
+			"selectel_vpc_network_subnet_v2":                       dataSourceVPCNetworkSubnetV2(),
+			"selectel_vpc_port_v2":                                 dataSourceVPCPortV2(),
+			"selectel_vpc_router_v2":                               dataSourceVPCRouterV2(),
+			"selectel_vpc_secgroup_v2":                             dataSourceVPCSecGroupV2(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"selectel_vpc_floatingip_v2":                            resourceVPCFloatingIPV2(),
@@ -167,7 +177,8 @@ func Provider(providerVersion string) *schema.Provider {
 			"selectel_dedicated_ssh_keys_v1":                        resourceDedicatedSSHKeysV1(),
 			"selectel_vpc_license_v2":                               resourceVPCLicenseV2(),
 			"selectel_vpc_project_v2":                               resourceVPCProjectV2(),
-			"selectel_vpc_subnet_v2":                                resourceVPCSubnetV2(),
+			"selectel_vpc_subnet_v2":                                resourceDeprecatedVPCSubnetV2(),
+			"selectel_vpc_public_subnet_v2":                         resourceVPCPublicSubnetV2(),
 			"selectel_iam_serviceuser_v1":                           resourceIAMServiceUserV1(),
 			"selectel_iam_user_v1":                                  resourceIAMUserV1(),
 			"selectel_iam_s3_credentials_v1":                        resourceIAMS3CredentialsV1(),
@@ -220,6 +231,20 @@ func Provider(providerVersion string) *schema.Provider {
 			"selectel_private_dns_zone_v1":                          resourcePrivateDNSZoneV1(),
 			"selectel_dedicated_private_subnet_v1":                  resourceDedicatedPrivateSubnetV1(),
 			"selectel_vpc_public_port_v1":                           resourceVPCPublicPortV1(),
+			"selectel_vpc_network_v2":                               resourceVPCNetworkV2(),
+			"selectel_vpc_network_subnet_v2":                        resourceVPCNetworkSubnetV2(),
+			"selectel_vpc_network_subnet_route_v2":                  resourceVPCNetworkSubnetRouteV2(),
+			"selectel_vpc_port_v2":                                  resourceVPCPortV2(),
+			"selectel_vpc_port_forwarding_v2":                       resourceVPCPortForwardingV2(),
+			"selectel_vpc_floatingip_associate_v2":                  resourceVPCFloatingIPAssociateV2(),
+			"selectel_vpc_router_v2":                                resourceVPCRouterV2(),
+			"selectel_vpc_router_interface_v2":                      resourceVPCRouterInterfaceV2(),
+			"selectel_vpc_router_route_v2":                          resourceVPCRouterRouteV2(),
+			"selectel_vpc_router_routes_v2":                         resourceVPCRouterRoutesV2(),
+			"selectel_vpc_rbac_policy_v2":                           resourceVPCRBACPolicyV2(),
+			"selectel_vpc_secgroup_v2":                              resourceVPCSecGroupV2(),
+			"selectel_vpc_secgroup_rule_v2":                         resourceVPCSecGroupRuleV2(),
+			"selectel_vpc_port_secgroup_associate_v2":               resourceVPCPortSecGroupAssociateV2(),
 		},
 	}
 
